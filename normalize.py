@@ -17,7 +17,7 @@ def normalize_timestamps(file):
     
     df.to_csv(f"new_{file}", index=False)
 
-files = ['air.csv', 'gps1.csv', 'imu.csv', 'nav.csv', 'quat.csv', 'utc.csv', 'vel.csv']
+files = ['data/air.csv', 'data/gps1.csv', 'data/imu.csv', 'data/nav.csv', 'data/quat.csv', 'data/utc.csv', 'data/vel.csv']
 
 for f in files:
     normalize_timestamps(f)
