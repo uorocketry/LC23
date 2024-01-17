@@ -120,15 +120,26 @@ for i in range(1, len(df_imu)):
 
 # Cut off the first 1000 entries 
 
+# Ensure 'timestamp' is of a datetime type
+df_imu.index = pd.to_datetime(df_imu.index)
+df_air.index = pd.to_datetime(df_air.index)
+df_vel.index = pd.to_datetime(df_vel.index)
+
+# Merge the dataframes
 combined_df = pd.merge(df_imu, df_air, on='timestamp', how='outer')
 combined_df = pd.merge(combined_df, df_vel, on='timestamp', how='outer')
+
+# Sort by 'timestamp'
+combined_df = combined_df.sort_values(by='timestamp')
+
+# Interpolate missing values
+combined_df.interpolate(inplace=True)
 # combined_df = pd.concat([df_imu, df_air, df_vel], ignore_index=True)
 # Bunch of garbage at the start. Cut it off.
 # combined_df = combined_df.iloc[1442770471:]
 
 # combined_df.fillna('', inplace=True)
 
-combined_df.interpolate()
 
 if (combined_df.index.is_monotonic_increasing):
     print("IMU Timestamps are in order")
