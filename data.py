@@ -24,7 +24,7 @@ df_air['timestamp'] = df_air['timestamp'].astype(int)
 df_vel['timestamp'] = df_vel['timestamp'].astype(int)
 # df_gps['timestamp'] = df_gps['timestamp'].astype(int)
 
-df_vel = pd.concat([df_vel,df_gps], axis=0)
+df_vel = pd.merge(df_vel,df_gps, on='timestamp', how='outer')
 
 
 df_imu.set_index('timestamp', inplace=True)
@@ -120,7 +120,8 @@ for i in range(1, len(df_imu)):
 
 # Cut off the first 1000 entries 
 
-combined_df = pd.concat([df_imu, df_air, df_vel], axis=0)
+combined_df = pd.merge(df_imu, df_air, on='timestamp', how='outer')
+combined_df = pd.merge(combined_df, df_vel, on='timestamp', how='outer')
 # combined_df = pd.concat([df_imu, df_air, df_vel], ignore_index=True)
 # Bunch of garbage at the start. Cut it off.
 # combined_df = combined_df.iloc[1442770471:]
