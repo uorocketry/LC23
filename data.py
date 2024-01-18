@@ -121,9 +121,9 @@ for i in range(1, len(df_imu)):
 # Cut off the first 1000 entries 
 
 # Ensure 'timestamp' is of a datetime type
-df_imu.index = pd.to_datetime(df_imu.index)
-df_air.index = pd.to_datetime(df_air.index)
-df_vel.index = pd.to_datetime(df_vel.index)
+df_imu.index = pd.to_datetime(df_imu.index, unit='us')
+df_air.index = pd.to_datetime(df_air.index, unit='us')
+df_vel.index = pd.to_datetime(df_vel.index, unit='us')
 
 # Merge the dataframes
 combined_df = pd.merge(df_imu, df_air, on='timestamp', how='outer')
